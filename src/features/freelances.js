@@ -1,5 +1,7 @@
 import produce from 'immer'
 import { selectFreelances } from '../utils/selectors'
+import { createAction } from '@reduxjs/toolkit'
+
 
 // Le state initial de la feature freelances
 const initialState = {
@@ -10,16 +12,24 @@ const initialState = {
     // l'erreur lorsque la requête échoue
     error: null,
 }
-// Les noms des actions
-const FETCHING = 'freelances/fetching'
-const RESOLVED = 'freelances/resolved'
-const REJECTED = 'freelances/rejected'
+
+
 // la requête est en cours
-const freelancesFetching = () => ({ type: FETCHING })
+const freelancesFetching = createAction('freelances/fetching')
+
 // la requête a fonctionné
-const freelancesResolved = (data) => ({ type: RESOLVED, payload: data })
+const freelancesResolved = createAction('freelances/resolved', (data) => {
+    return {
+        payload: data
+    }
+})
+
 // la requête a échoué
-const freelancesRejected = (error) => ({ type: REJECTED, payload: error })
+const freelancesRejected = createAction('freelances/rejected', (error) => {
+    return {
+        payload: error
+    }
+})
 
 // cette fonction est une action asynchrone
 // elle attend le store redux en paramètre
@@ -52,7 +62,7 @@ export default function freelancesReducer(state = initialState, action) {
         // on fait un switch sur le type de l'action
         switch (action.type) {
             // si l'action est de type FETCHING
-            case FETCHING: {
+            case freelancesFetching.toString(): {
                 // si le statut est void
                 if (draft.status === 'void') {
                     // on passe en pending
@@ -76,7 +86,7 @@ export default function freelancesReducer(state = initialState, action) {
                 return
             }
             // si l'action est de type RESOLVED
-            case RESOLVED: {
+            case freelancesResolved.toString(): {
                 // si la requête est en cours
                 if (draft.status === 'pending' || draft.status === 'updating') {
                     // on passe en resolved et on sauvegarde les données
@@ -88,7 +98,7 @@ export default function freelancesReducer(state = initialState, action) {
                 return
             }
             // si l'action est de type REJECTED
-            case REJECTED: {
+            case freelancesRejected.toString(): {
                 // si la requête est en cours
                 if (draft.status === 'pending' || draft.status === 'updating') {
                     // on passe en rejected, on sauvegarde l'erreur et on supprime les données
