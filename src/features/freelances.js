@@ -33,9 +33,9 @@ const freelancesRejected = createAction('freelances/rejected', (error) => {
 
 // cette fonction est une action asynchrone
 // elle attend le store redux en paramètre
-export async function fetchOrUpdateFreelances(store) {
-    // on peut lire le state actuel avec store.getState()
-    const status = selectFreelances(store.getState()).status
+export async function fetchOrUpdateFreelances(dispatch, getState) {
+    // on peut lire le state actuel avec getState()
+    const status = selectFreelances(getState()).status
     // si la requête est déjà en cours
     if (status === 'pending' || status === 'updating') {
         // on stop la fonction pour éviter de récupérer plusieurs fois la même donnée
@@ -43,16 +43,16 @@ export async function fetchOrUpdateFreelances(store) {
     }
     // On peut modifier le state en envoyant des actions avec store.dispatch()
     // ici on indique que la requête est en cours
-    store.dispatch(freelancesFetching())
+    dispatch(freelancesFetching())
     try {
         // on utilise fetch pour faire la requête
         const response = await fetch('http://localhost:8000/freelances')
         const data = await response.json()
         // si la requête fonctionne, on envoie les données à redux avec l'action resolved
-        store.dispatch(freelancesResolved(data))
+        dispatch(freelancesResolved(data))
     } catch (error) {
         // en cas d'erreur on infirme le store avec l'action rejected
-        store.dispatch(freelancesRejected(error))
+        dispatch(freelancesRejected(error))
     }
 }
 

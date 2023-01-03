@@ -1,13 +1,11 @@
 import { useContext, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import colors from '../../utils/style/colors'
 import { Loader } from '../../utils/style/Atoms'
 import { SurveyContext } from '../../utils/context'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { selectSurvey } from '../../utils/selectors'
-import { useStore } from 'react-redux'
 import { fetchOrUpdateSurvey } from '../../features/survey'
 
 const SurveyContainer = styled.div`
@@ -79,10 +77,10 @@ function Survey() {
   }
   // const { data, isLoading, error } = useFetch(`http://localhost:8000/survey`)
   const survey = useSelector(selectSurvey)
-  const store = useStore()
+  const dispatch = useDispatch()
   useEffect(() => {
-    fetchOrUpdateSurvey(store)
-  }, [store])
+    dispatch(fetchOrUpdateSurvey)
+  }, [dispatch])
   const surveyData = survey.data?.surveyData
   
   

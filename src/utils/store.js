@@ -3,7 +3,8 @@ import themeReducer from '../features/theme'
 import freelancesReducer from '../features/freelances'
 import freelanceReducer from '../features/freelance'
 import surveyReducer from '../features/survey'
-import { configureStore } from '@reduxjs/toolkit'
+import resultsReducer from '../features/results'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
 const store = configureStore({
     reducer: {
@@ -11,7 +12,11 @@ const store = configureStore({
         freelances: freelancesReducer,
         freelance: freelanceReducer,
         survey: surveyReducer,
-    }
+        results: resultsReducer,
+    },
+    middleware: [
+        ...getDefaultMiddleware(),
+    ]
 })
 
 export default store

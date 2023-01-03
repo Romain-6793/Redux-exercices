@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
-import { useSelector } from 'react-redux'
 import colors from '../../utils/style/colors'
-import { useStore } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrUpdateFreelance } from '../../features/freelance'
 import { selectFreelance, selectTheme } from '../../utils/selectors'
 import { useParams } from 'react-router'
@@ -91,29 +90,16 @@ const Availability = styled.span`
 `
 
 function Profile() {
-  // const { id: queryId } = useParams()
-  // const [profileData, setProfileData] = useState({})
-  // useEffect(() => {
-  //   fetch(`http://localhost:8000/freelance?id=${queryId}`)
-  //     .then((response) => response.json())
-  //     .then((jsonResponse) => {
-  //       setProfileData(jsonResponse?.freelanceData)
-  //     })
-  // }, [queryId])
-
   
   const { id: freelanceId } = useParams()
   const theme = useSelector(selectTheme)
-  const store = useStore()
+  const dispatch = useDispatch()
 
   // on utilise useEffect pour lancer la requête au chargement du composant
   useEffect(() => {
-    // on exécute notre action asynchrone avec le store en paramètre
-    fetchOrUpdateFreelance(store, freelanceId)
-    // On suit la recommandation d'ESLint de passer le store
-    // en dépendances car il est utilisé dans l'effet
-    // cela n'as pas d'impacte sur le fonctionnement car le store ne change jamais
-  }, [store, freelanceId])
+    //On utilise dispatch avec le thunk fetchOrUpdateFreelance qui prend en argument freelanceId
+    dispatch(fetchOrUpdateFreelance(freelanceId))
+  }, [dispatch, freelanceId])
 
   const freelance = useSelector(selectFreelance(freelanceId))
 
