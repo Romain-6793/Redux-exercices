@@ -74,10 +74,8 @@ export function formatJobList(title, listLength, index) {
 }
 
 function Results() {
-    const theme = useSelector(state => state.theme.currentTheme);
-  
+  const theme = useSelector(state => state.theme.currentTheme);
   const { answers } = useContext(SurveyContext)
-
   const fetchParams = formatQueryParams(answers)
   const results = useSelector(selectResults)
   const dispatch = useDispatch()
