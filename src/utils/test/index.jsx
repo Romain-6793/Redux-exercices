@@ -2,7 +2,6 @@ import { render as rtlRender } from '@testing-library/react'
 // import { ThemeProvider, SurveyProvider } from '../../utils/context'
 import { MemoryRouter } from 'react-router-dom'
 import themeReducer from '../../features/theme'
-import surveyReducer from '../../features/survey'
 import resultsReducer from '../../features/results'
 import freelancesReducer from '../../features/freelances'
 import freelanceReducer from '../../features/freelance'
@@ -15,7 +14,6 @@ export function render(ui, options) {
       reducer: {
           theme: themeReducer,
           freelances: freelancesReducer,
-          survey: surveyReducer,
           freelance: freelanceReducer,
           results: resultsReducer,
           answers: answersReducer,

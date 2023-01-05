@@ -12,8 +12,12 @@ import Error from './components/Error'
 import GlobalStyle from './utils/style/GlobalStyle'
 import { Provider } from 'react-redux'
 import store from './utils/store'
+import { QueryClientProvider, QueryClient, } from 'react-query'
+
+const queryClient = new QueryClient()
 
 ReactDOM.render(
+  <QueryClientProvider client={queryClient}>
   <Provider store={store}>
     <React.StrictMode>
       <Router>
@@ -43,6 +47,7 @@ ReactDOM.render(
         <Footer />
       </Router>
     </React.StrictMode>
-  </Provider>,
+  </Provider>
+  </QueryClientProvider>,
   document.getElementById('root')
 )
