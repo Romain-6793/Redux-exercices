@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import colors from '../../utils/style/colors'
 import EmailInput from '../EmailInput'
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleTheme } from '../../features/theme';
+import * as themeActions from '../../features/theme';
 
 const FooterContainer = styled.footer`
   display: flex;
@@ -22,7 +22,7 @@ const NightModeButton = styled.button`
 
 function Footer() {
   const dispatch = useDispatch();
-  const handleTheme = () => dispatch(toggleTheme())
+  const handleTheme = () => dispatch(themeActions.toggle())
   const theme = useSelector(state => state.theme);
   console.log({theme})
   return (
