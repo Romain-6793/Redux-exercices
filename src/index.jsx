@@ -10,42 +10,39 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Error from './components/Error'
 import GlobalStyle from './utils/style/GlobalStyle'
-import { SurveyProvider } from './utils/context'
-import { Provider } from 'react-redux';
-import store from './utils/store';
+import { Provider } from 'react-redux'
+import store from './utils/store'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <Provider store={store}>
-        <SurveyProvider>
-          <GlobalStyle />
-          <Header />
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/survey/:questionNumber">
-              <Survey />
-            </Route>
-            <Route path="/results">
-              <Results />
-            </Route>
-            <Route path="/freelances">
-              <Freelances />
-            </Route>
-            <Route
-              path="/profile/:id"
-              render={(props) => <Profile {...props} />}
-            />
-            <Route path="*">
-              <Error />
-            </Route>
-          </Switch>
-          <Footer />
-        </SurveyProvider>
-        </Provider>
-    </Router>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <Router>
+        <GlobalStyle />
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/survey/:questionNumber">
+            <Survey />
+          </Route>
+          <Route path="/results">
+            <Results />
+          </Route>
+          <Route path="/freelances">
+            <Freelances />
+          </Route>
+          <Route
+            path="/profile/:id"
+            render={(props) => <Profile {...props} />}
+          />
+          <Route path="*">
+            <Error />
+          </Route>
+        </Switch>
+        <Footer />
+      </Router>
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 )

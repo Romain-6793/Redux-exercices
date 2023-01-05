@@ -4,6 +4,7 @@ import { StyledLink } from '../../utils/style/Atoms'
 import LightLogo from '../../assets/light-logo.png'
 import DarkLogo from '../../assets/dark-logo.png'
 import { useSelector } from 'react-redux'
+import { selectTheme } from '../../utils/selectors'
 
 const HomeLogo = styled.img`
   height: 70px;
@@ -17,7 +18,7 @@ const NavContainer = styled.nav`
 `
 
 function Header() {
-      const theme = useSelector(state => state.theme.currentTheme);
+  const theme = useSelector(selectTheme)
 
   return (
     <NavContainer>

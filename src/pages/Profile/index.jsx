@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
+import { useParams } from 'react-router-dom'
 import colors from '../../utils/style/colors'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchOrUpdateFreelance } from '../../features/freelance'
 import { selectFreelance, selectTheme } from '../../utils/selectors'
-import { useParams } from 'react-router'
+import { fetchOrUpdateFreelance } from '../../features/freelance'
 
 const ProfileWrapper = styled.div`
   display: flex;
@@ -90,14 +90,11 @@ const Availability = styled.span`
 `
 
 function Profile() {
-  
-  const { id: freelanceId } = useParams()
   const theme = useSelector(selectTheme)
+  const { id: freelanceId } = useParams()
   const dispatch = useDispatch()
 
-  // on utilise useEffect pour lancer la requête au chargement du composant
   useEffect(() => {
-    //On utilise dispatch avec le thunk fetchOrUpdateFreelance qui prend en argument freelanceId
     dispatch(fetchOrUpdateFreelance(freelanceId))
   }, [dispatch, freelanceId])
 
@@ -108,31 +105,30 @@ function Profile() {
   const { picture, name, location, tjm, job, skills, available, id } =
     profileData
 
-  //Pourquoi les deux ? et l'objet vide ?
-
   return (
-        <ProfileWrapper theme={theme}>
-          <Picture src={picture} alt={name} height={150} width={150} />
-          <ProfileDetails theme={theme}>
-            <TitleWrapper>
-              <Title>{name}</Title>
-              <Location>{location}</Location>
-            </TitleWrapper>
-            <JobTitle>{job}</JobTitle>
-            <SkillsWrapper>
-              {skills &&
-                skills.map((skill) => (
-                  <Skill key={`skill-${skill}-${id}`} theme={theme}>
-                    {skill}
-                  </Skill>
-                ))}
-            </SkillsWrapper>
-            <Availability available={available}>
-              {available ? 'Disponible maintenant' : 'Indisponible'}
-            </Availability>
-            <Price>{tjm} € / jour</Price>
-          </ProfileDetails>
-        </ProfileWrapper>
-      )}
-  
+    <ProfileWrapper theme={theme}>
+      <Picture src={picture} alt={name} height={150} width={150} />
+      <ProfileDetails theme={theme}>
+        <TitleWrapper>
+          <Title>{name}</Title>
+          <Location>{location}</Location>
+        </TitleWrapper>
+        <JobTitle>{job}</JobTitle>
+        <SkillsWrapper>
+          {skills &&
+            skills.map((skill) => (
+              <Skill key={`skill-${skill}-${id}`} theme={theme}>
+                {skill}
+              </Skill>
+            ))}
+        </SkillsWrapper>
+        <Availability available={available}>
+          {available ? 'Disponible maintenant' : 'Indisponible'}
+        </Availability>
+        <Price>{tjm} € / jour</Price>
+      </ProfileDetails>
+    </ProfileWrapper>
+  )
+}
+
 export default Profile

@@ -66,16 +66,14 @@ Card.propTypes = {
   label: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   picture: PropTypes.string.isRequired,
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.string.isRequired,
 }
 
 Card.defaultProps = {
   label: '',
   title: '',
   picture: DefaultPicture,
-  theme: {
-    theme: 'light'
-  },
+  theme: 'light',
 }
 
 export default Card

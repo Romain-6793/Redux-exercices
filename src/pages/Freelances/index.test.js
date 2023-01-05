@@ -38,3 +38,7 @@ it('Should display freelancers names after loader is removed', async () => {
   expect(screen.getByText('Hermione Granger')).toBeInTheDocument()
   expect(screen.queryByTestId('loader')).not.toBeInTheDocument()
 })
+
+
+// for the package.json file, original setting
+// test : "react-scripts test"

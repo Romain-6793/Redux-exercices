@@ -1,22 +1,18 @@
-
 import themeReducer from '../features/theme'
 import freelancesReducer from '../features/freelances'
-import freelanceReducer from '../features/freelance'
 import surveyReducer from '../features/survey'
+import freelanceReducer from '../features/freelance'
 import resultsReducer from '../features/results'
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import answersReducer from '../features/answers'
+import { configureStore } from '@reduxjs/toolkit'
 
-const store = configureStore({
+export default configureStore({
     reducer: {
         theme: themeReducer,
         freelances: freelancesReducer,
-        freelance: freelanceReducer,
         survey: surveyReducer,
+        freelance: freelanceReducer,
         results: resultsReducer,
+        answers: answersReducer,
     },
-    middleware: [
-        ...getDefaultMiddleware(),
-    ]
 })
-
-export default store

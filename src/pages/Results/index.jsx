@@ -1,11 +1,14 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 import EmptyList from '../../components/EmptyList'
-import { SurveyContext } from '../../utils/context'
 import colors from '../../utils/style/colors'
 import { StyledLink, Loader } from '../../utils/style/Atoms'
-import {useDispatch, useSelector} from 'react-redux'
-import { selectResults } from '../../utils/selectors'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  selectAnswers,
+  selectResults,
+  selectTheme,
+} from '../../utils/selectors'
 import { fetchOrUpdateResults } from '../../features/results'
 
 const ResultsContainer = styled.div`
@@ -74,8 +77,8 @@ export function formatJobList(title, listLength, index) {
 }
 
 function Results() {
-  const theme = useSelector(state => state.theme.currentTheme);
-  const { answers } = useContext(SurveyContext)
+  const theme = useSelector(selectTheme)
+  const answers = useSelector(selectAnswers)
   const fetchParams = formatQueryParams(answers)
   const results = useSelector(selectResults)
   const dispatch = useDispatch()
@@ -84,7 +87,7 @@ function Results() {
     dispatch(fetchOrUpdateResults(fetchParams))
   }, [dispatch, fetchParams])
 
-  if (results.status === "rejected") {
+  if (results.status === 'rejected') {
     return <span>Il y a un problème</span>
   }
 
